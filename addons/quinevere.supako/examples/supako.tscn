@@ -1,0 +1,174 @@
+[gd_scene load_steps=18 format=3 uid="uid://blwrsnlf4auej"]
+
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/effect/fill_painter.gd" id="2_5xpb1"]
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/effect/stroke_painter.gd" id="3_eih35"]
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/node/path.gd" id="4_ylpjv"]
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/effect/corners.gd" id="5_b7flh"]
+
+[sub_resource type="Curve2D" id="Curve2D_v26m1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1240, 8, 0, 0, 0, 0, 1216, 32, 0, 0, 0, 0, 888, 48, 0, 0, 0, 0, 408, 40, 0, 0, 0, 0, -32, 48, 0, 0, 0, 0, -16, 24, 0, 0, 0, 0, 200, 16, 0, 0, 0, 0, 880, 16)
+}
+point_count = 8
+
+[sub_resource type="Resource" id="Resource_sgwk6"]
+script = ExtResource("5_b7flh")
+sharp_threshold = 0.523599
+sharp_chamfer_depth = 12.0
+fillet_threshold = 1.0472
+fillet_depth = 12.0
+minimum_segment_length = 4.0
+
+[sub_resource type="Resource" id="Resource_5hnuv"]
+script = ExtResource("2_5xpb1")
+color = Color(1, 1, 1, 1)
+uv_mode = 0
+texture_offset = Vector2(0, 0)
+texture_scale = Vector2(1, 1)
+texture_rotation = 0.0
+texture_filter = 0
+texture_repeat = 0
+
+[sub_resource type="Resource" id="Resource_lltlm"]
+script = ExtResource("3_eih35")
+base_width = 8.0
+balance = 0.0
+texture_mode = 0
+color = Color(0.678431, 0.678431, 0.678431, 1)
+vertex_colors_enabled = true
+
+[sub_resource type="Curve2D" id="Curve2D_tnqxs"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 168, -272, 0, 0, 0, 0, 176, -208, 0, 0, 0, 0, 80, -200, 0, 0, 0, 0, 64, -168, 0, 0, 0, 0, 168, -104, 0, 0, 0, 0, 184, -56, 0, 0, 0, 0, 160, -8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, -72, 0, 0, 0, 0, 128, -64, 0, 0, 0, 0, 112, -96, 0, 0, 0, 0, 24, -144, 0, 0, 0, 0, 8, -208, 0, 0, 0, 0, 40, -256)
+}
+point_count = 14
+
+[sub_resource type="Curve2D" id="Curve2D_a2d1d"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 30, -224, 0, 0, 0, 0, 30, -72, 0, 0, 0, 0, 49.5, -29.5, 0, 0, 0, 0, 78, -32, 0, 0, 0, 0, 102, -56, 0, 0, 0, 0, 126, -120, 0, 0, 0, 0, 126, -232, 0, 0, 0, 0, 158, -240, 0, 0, 0, 0, 158, 0, 0, 0, 0, 0, 126, 0, 0, 0, 0, 0, 118, -40, 0, 0, 0, 0, 94, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, -2, -64, 0, 0, 0, 0, -2, -232)
+}
+point_count = 15
+
+[sub_resource type="Curve2D" id="Curve2D_37jcd"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1.5, -0.5, 0, 0, 0, 0, 0, -235.5, 0, 0, 0, 0, 125.5, -238.5, 0, 0, 0, 0, 173.5, -153, 0, 0, 0, 0, 102.5, -100, 0, 0, 0, 0, 39, -105.5, 0, 0, 0, 0, 26.5, -0.5)
+}
+point_count = 7
+
+[sub_resource type="Curve2D" id="Curve2D_pl44g"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 36, -200, 0, 0, 0, 0, 92, -208, 0, 0, 0, 0, 116, -168, 0, 0, 0, 0, 92, -144, 0, 0, 0, 0, 44, -152)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_46m45"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -17, 0, 0, 0, 0, 0, 40, -233, 0, 0, 0, 0, 115.5, -237, 0, 0, 0, 0, 183, 0, 0, 0, 0, 0, 120, -3, 0, 0, 0, 0, 111, -80, 0, 0, 0, 0, 71, -104, 0, 0, 0, 0, 29, -1)
+}
+point_count = 8
+
+[sub_resource type="Curve2D" id="Curve2D_fv5w5"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 78.5, -198, 0, 0, 0, 0, 55, -136, 0, 0, 0, 0, 111, -128)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_puvyv"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 2, 0.5, 0, 0, 0, 0, -1, -248, 0, 0, 0, 0, 39, -248, 0, 0, 0, 0, 39, -120, 0, 0, 0, 0, 132.5, -229, 0, 0, 0, 0, 142.5, -173.5, 0, 0, 0, 0, 79, -96, 0, 0, 0, 0, 159, -32, 0, 0, 0, 0, 127, 0, 0, 0, 0, 0, 39, -80, 0, 0, 0, 0, 39, -3.5)
+}
+point_count = 11
+
+[sub_resource type="Curve2D" id="Curve2D_1k7cs"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1.5, -163.5, 0, 0, 0, 0, 46.5, -234.5, 0, 0, 0, 0, 144.5, -231.5, 0, 0, 0, 0, 192, -149, 0, 0, 0, 0, 184, -72, 0, 0, 0, 0, 160, -8, 0, 0, 0, 0, 64, 0, 0, 0, 0, 0, 8, -48)
+}
+point_count = 8
+
+[sub_resource type="Curve2D" id="Curve2D_ivmog"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 72, -168, 0, 0, 0, 0, 136, -152, 0, 0, 0, 0, 128, -64, 0, 0, 0, 0, 64, -56, 0, 0, 0, 0, 56, -112)
+}
+point_count = 5
+
+[node name="Node2D" type="Node2D"]
+
+[node name="SpkoPath" type="Node2D" parent="."]
+script = ExtResource("4_ylpjv")
+curve = SubResource("Curve2D_v26m1")
+_elemid = 3628127178
+effects_data = Array[Dictionary]([{
+"enabled": false,
+"id": 3077133547,
+"module": SubResource("Resource_sgwk6")
+}, {
+"enabled": true,
+"id": 3357868213,
+"module": SubResource("Resource_5hnuv")
+}, {
+"enabled": true,
+"id": 3360722271,
+"module": SubResource("Resource_lltlm")
+}])
+
+[node name="s" type="Node2D" parent="SpkoPath"]
+script = ExtResource("4_ylpjv")
+curve = SubResource("Curve2D_tnqxs")
+_elemid = 3197488888
+effects_data = Array[Dictionary]([])
+
+[node name="u" type="Node2D" parent="SpkoPath"]
+position = Vector2(210, 0)
+script = ExtResource("4_ylpjv")
+curve = SubResource("Curve2D_a2d1d")
+_elemid = 4216949596
+effects_data = Array[Dictionary]([])
+
+[node name="p" type="Node2D" parent="SpkoPath"]
+position = Vector2(396, 0)
+script = ExtResource("4_ylpjv")
+curve = SubResource("Curve2D_37jcd")
+_elemid = 1806010096
+effects_data = Array[Dictionary]([])
+
+[node name="SpkoPath" type="Node2D" parent="SpkoPath/p"]
+script = ExtResource("4_ylpjv")
+curve = SubResource("Curve2D_pl44g")
+merge_op = 2
+_elemid = 4004164738
+effects_data = Array[Dictionary]([])
+
+[node name="a" type="Node2D" parent="SpkoPath"]
+position = Vector2(577, 0)
+script = ExtResource("4_ylpjv")
+curve = SubResource("Curve2D_46m45")
+_elemid = 3849319054
+effects_data = Array[Dictionary]([])
+
+[node name="SpkoPath" type="Node2D" parent="SpkoPath/a"]
+script = ExtResource("4_ylpjv")
+curve = SubResource("Curve2D_fv5w5")
+merge_op = 2
+_elemid = 2877195410
+effects_data = Array[Dictionary]([])
+
+[node name="k" type="Node2D" parent="SpkoPath"]
+position = Vector2(777, 0)
+script = ExtResource("4_ylpjv")
+curve = SubResource("Curve2D_puvyv")
+_elemid = 600909233
+effects_data = Array[Dictionary]([])
+
+[node name="o" type="Node2D" parent="SpkoPath"]
+position = Vector2(952, 0)
+script = ExtResource("4_ylpjv")
+curve = SubResource("Curve2D_1k7cs")
+_elemid = 95787892
+effects_data = Array[Dictionary]([])
+
+[node name="SpkoPath" type="Node2D" parent="SpkoPath/o"]
+script = ExtResource("4_ylpjv")
+curve = SubResource("Curve2D_ivmog")
+merge_op = 2
+_elemid = 4112025106
+effects_data = Array[Dictionary]([])
