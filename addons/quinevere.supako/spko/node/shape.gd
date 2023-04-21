@@ -5,7 +5,7 @@ class_name SpkoShape extends Node2D
 signal updated()
 
 
-enum MergeOp { UNION, INTERSECT, SUBTRACT }
+enum MergeOp { IGNORE, APPEND, UNION, INTERSECT, SUBTRACT }
 
 
 enum EfctProperty { MODULE, ENABLED, NAME, INVALID }
@@ -94,7 +94,8 @@ class EffectContext extends SpkoEffect.CallbackContext:
 			effect._effect_update(self)
 
 
-@export var merge_op: MergeOp = MergeOp.UNION:
+## How this shape should be merged with its parent.
+@export var merge_op: MergeOp = MergeOp.IGNORE:
 	set(value):
 		merge_op = value
 		mark_dirty()
@@ -492,20 +493,29 @@ func _update_shape() -> void:
 
 
 func _merge(op: MergeOp, a: SpkoBrush, b: SpkoBrush, out: SpkoBrush) -> void:
-	for aidx in range(a.get_island_count()):
-		var aisl := a.get_island_gon(aidx)
-		for bidx in range(b.get_island_count()):
-			var bisl := b.get_island_gon(bidx)
-			match op:
-				MergeOp.UNION:
-					for gon in Geometry2D.merge_polygons(aisl.points, bisl.points):
-						out.add_island_from_points(gon, aisl.element_id)
-				MergeOp.INTERSECT:
-					for gon in Geometry2D.intersect_polygons(aisl.points, bisl.points):
-						out.add_island_from_points(gon, aisl.element_id)
-				MergeOp.SUBTRACT:
-					for gon in Geometry2D.clip_polygons(aisl.points, bisl.points):
-						out.add_island_from_points(gon, aisl.element_id)
+	if op == MergeOp.IGNORE:
+		out.add_from(a, Transform2D.IDENTITY)
+	elif op == MergeOp.APPEND:
+		out.add_from(a, Transform2D.IDENTITY)
+		out.add_from(b, Transform2D.IDENTITY)
+	else:
+		for aidx in range(a.get_island_count()):
+			var aisl := a.get_island_gon(aidx)
+			for bidx in range(b.get_island_count()):
+				var bisl := b.get_island_gon(bidx)
+				match op:
+#					MergeOp.APPEND:
+#						out.add_island_from_points(aisl.points, aisl.element_id)
+#						out.add_island_from_points(bisl.points, bisl.element_id)
+					MergeOp.UNION:
+						for gon in Geometry2D.merge_polygons(aisl.points, bisl.points):
+							out.add_island_from_points(gon, aisl.element_id)
+					MergeOp.INTERSECT:
+						for gon in Geometry2D.intersect_polygons(aisl.points, bisl.points):
+							out.add_island_from_points(gon, aisl.element_id)
+					MergeOp.SUBTRACT:
+						for gon in Geometry2D.clip_polygons(aisl.points, bisl.points):
+							out.add_island_from_points(gon, aisl.element_id)
 
 
 func _get_effect_context(index: int) -> EffectContext:
