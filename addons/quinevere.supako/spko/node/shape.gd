@@ -505,10 +505,12 @@ func _update_shape() -> void:
 
 
 func _merge(op: MergeOp, a: SpkoBrush, b: SpkoBrush, out: SpkoBrush) -> void:
-	if op == MergeOp.IGNORE:
+	if op == MergeOp.IGNORE || b.get_island_count() == 0:
 		out.add_from(a, Transform2D.IDENTITY)
 	elif op == MergeOp.APPEND:
 		out.add_from(a, Transform2D.IDENTITY)
+		out.add_from(b, Transform2D.IDENTITY)
+	elif op == MergeOp.UNION && a.get_island_count() == 0:
 		out.add_from(b, Transform2D.IDENTITY)
 	else:
 		for aidx in range(a.get_island_count()):
@@ -516,9 +518,6 @@ func _merge(op: MergeOp, a: SpkoBrush, b: SpkoBrush, out: SpkoBrush) -> void:
 			for bidx in range(b.get_island_count()):
 				var bisl := b.get_island_gon(bidx)
 				match op:
-#					MergeOp.APPEND:
-#						out.add_island_from_points(aisl.points, aisl.element_id)
-#						out.add_island_from_points(bisl.points, bisl.element_id)
 					MergeOp.UNION:
 						for gon in Geometry2D.merge_polygons(aisl.points, bisl.points):
 							out.add_island_from_points(gon, aisl.element_id)
