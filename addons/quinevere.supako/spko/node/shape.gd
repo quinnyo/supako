@@ -5,7 +5,19 @@ class_name SpkoShape extends Node2D
 signal updated()
 
 
-enum MergeOp { IGNORE, APPEND, UNION, INTERSECT, SUBTRACT }
+## The boolean merge operators. Different ways to combine/merge two shapes.
+enum MergeOp {
+	## `C = A` -- No-op: result will not include B in any way.
+	IGNORE,
+	## `C = A .. B` -- Result will be all of A with all of B appended.
+	APPEND,
+	## `C = A | B` -- Result will include A and B,
+	UNION,
+	## `C = A & B` -- Result will include areas common to both A and B.
+	INTERSECT,
+	## `C = A & !B` -- Keep A where B is not.
+	SUBTRACT,
+}
 
 
 enum EfctProperty { MODULE, ENABLED, NAME, INVALID }
