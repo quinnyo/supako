@@ -1,0 +1,106 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcns4hw7gowen"]
+
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/editor/shape_effects_inspector/effect_instance_widget.gd" id="1_aa6wr"]
+[ext_resource type="Texture2D" uid="uid://d3hlcsymkt2i4" path="res://addons/quinevere.supako/icon/action/move-up.svg" id="2_ey44r"]
+[ext_resource type="Texture2D" uid="uid://bojnwfgf5gq0x" path="res://addons/quinevere.supako/icon/action/move-down.svg" id="3_p8w87"]
+[ext_resource type="Texture2D" uid="uid://drmxhomrxp1v5" path="res://addons/quinevere.supako/icon/action/remove.svg" id="4_u7wjy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4extb"]
+
+[node name="EffectInstanceWidget" type="PanelContainer"]
+offset_right = 480.0
+offset_bottom = 45.0
+script = ExtResource("1_aa6wr")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="widget_index" type="Label" parent="MarginContainer/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.74558, 0.74558, 0.74558, 1)
+text = "#0"
+vertical_alignment = 2
+
+[node name="widget_icon" type="TextureRect" parent="MarginContainer/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+expand_mode = 3
+stretch_mode = 4
+
+[node name="widget_name" type="LineEdit" parent="MarginContainer/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+tooltip_text = "EffectInstance
+Type: AnEffect"
+theme_override_colors/font_placeholder_color = Color(0.694118, 0.694118, 0.694118, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4extb")
+text = "EffectInstance"
+placeholder_text = "(AnEffect)"
+expand_to_text_length = true
+
+[node name="widget_type" type="Label" parent="MarginContainer/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.784314)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "(StrokePainter)"
+horizontal_alignment = 2
+vertical_alignment = 2
+text_overrun_behavior = 3
+
+[node name="controls" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="widget_enabled" type="CheckBox" parent="MarginContainer/HBoxContainer/controls"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Enable/disable this effect. A disabled effect will not contribute anything  to the drawing."
+button_pressed = true
+
+[node name="move" type="HBoxContainer" parent="MarginContainer/HBoxContainer/controls"]
+layout_mode = 2
+
+[node name="widget_up" type="Button" parent="MarginContainer/HBoxContainer/controls/move"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Swap this effect with the one above it."
+icon = ExtResource("2_ey44r")
+flat = true
+
+[node name="widget_down" type="Button" parent="MarginContainer/HBoxContainer/controls/move"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Swap this effect with the one below it."
+icon = ExtResource("3_p8w87")
+flat = true
+
+[node name="widget_delete" type="Button" parent="MarginContainer/HBoxContainer/controls"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Remove this effect."
+icon = ExtResource("4_u7wjy")
+flat = true
+
+[connection signal="focus_exited" from="MarginContainer/HBoxContainer/HBoxContainer/widget_name" to="." method="_on_widget_name_focus_exited"]
+[connection signal="gui_input" from="MarginContainer/HBoxContainer/HBoxContainer/widget_name" to="." method="_on_widget_name_gui_input"]
+[connection signal="text_submitted" from="MarginContainer/HBoxContainer/HBoxContainer/widget_name" to="." method="_on_widget_name_text_submitted"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/controls/widget_enabled" to="." method="_on_widget_enabled_toggled"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/controls/move/widget_up" to="." method="_on_widget_up_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/controls/move/widget_down" to="." method="_on_widget_down_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/controls/widget_delete" to="." method="_on_widget_delete_pressed"]

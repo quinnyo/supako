@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://k8hane8dlhgf"]
+
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/editor/shape_effects_inspector/effect_chain_toolbar.gd" id="1_ug2uc"]
+[ext_resource type="Texture2D" uid="uid://c60jpsa5tngx1" path="res://addons/quinevere.supako/icon/action/add.svg" id="2_o8vj0"]
+
+[node name="effect_chain_toolbar" type="PanelContainer"]
+script = ExtResource("1_ug2uc")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="tool_add" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Choose an effect to add to the end of the effect chain."
+text = "Add Effect..."
+icon = ExtResource("2_o8vj0")
+
+[node name="tool_remove" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Remove"
+
+[node name="tool_duplicate" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Duplicate
+"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/tool_add" to="." method="_on_tool_add_pressed"]

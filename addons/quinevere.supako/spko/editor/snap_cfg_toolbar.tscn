@@ -1,0 +1,129 @@
+[gd_scene load_steps=7 format=3 uid="uid://bvf1f7hn0gsce"]
+
+[ext_resource type="Theme" uid="uid://b8ckvvvjrmdyp" path="res://addons/quinevere.supako/spko/editor/toolbar.theme" id="1_uq0cj"]
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/editor/snap_cfg_toolbar.gd" id="1_v3rs6"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_kklot"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ihh3c"]
+color = Color(0.454902, 0.454902, 0.454902, 1)
+grow_begin = -1.0
+grow_end = -1.0
+thickness = 2
+vertical = true
+
+[sub_resource type="SystemFont" id="SystemFont_juflm"]
+font_names = PackedStringArray("Monospace")
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_f0587"]
+font = SubResource("SystemFont_juflm")
+font_size = 10
+
+[node name="SnapCfgToolbar" type="PanelContainer"]
+offset_right = 538.0
+offset_bottom = 26.0
+theme = ExtResource("1_uq0cj")
+script = ExtResource("1_v3rs6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderToolbar"
+text = "supako/snap"
+
+[node name="enabled" type="CheckButton" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+flat = true
+
+[node name="relative" type="CheckBox" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+text = "Relative"
+flat = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"EnumPanel"
+
+[node name="snap_space" type="HBoxContainer" parent="HBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="space_local" type="Button" parent="HBoxContainer/HBoxContainer/PanelContainer/snap_space"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"EnumButton"
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_kklot")
+text = "Local"
+flat = true
+
+[node name="VSeparator2" type="VSeparator" parent="HBoxContainer/HBoxContainer/PanelContainer/snap_space"]
+layout_mode = 2
+theme_override_constants/separation = 4
+theme_override_styles/separator = SubResource("StyleBoxLine_ihh3c")
+
+[node name="space_parent" type="Button" parent="HBoxContainer/HBoxContainer/PanelContainer/snap_space"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"EnumButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_kklot")
+text = "Parent"
+flat = true
+
+[node name="VSeparator3" type="VSeparator" parent="HBoxContainer/HBoxContainer/PanelContainer/snap_space"]
+layout_mode = 2
+theme_override_constants/separation = 4
+theme_override_styles/separator = SubResource("StyleBoxLine_ihh3c")
+
+[node name="space_world" type="Button" parent="HBoxContainer/HBoxContainer/PanelContainer/snap_space"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"EnumButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_kklot")
+text = "World"
+flat = true
+
+[node name="position_step" type="HBoxContainer" parent="HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="pos_step_x" type="SpinBox" parent="HBoxContainer/HBoxContainer/position_step"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+max_value = 1024.0
+step = 0.1
+value = 8.0
+allow_greater = true
+select_all_on_focus = true
+
+[node name="pos_step_y" type="SpinBox" parent="HBoxContainer/HBoxContainer/position_step"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+max_value = 1024.0
+step = 0.1
+value = 8.0
+allow_greater = true
+select_all_on_focus = true
+
+[node name="debug_label" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_f0587")

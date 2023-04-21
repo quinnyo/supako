@@ -1,0 +1,48 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Supako"
+config/features=PackedStringArray("4.0", "Mobile")
+config/icon="res://icon.svg"
+
+[audio]
+
+driver/driver="Dummy"
+
+[debug]
+
+gdscript/warnings/exclude_addons=false
+gdscript/warnings/integer_division=0
+gdscript/warnings/unsafe_method_access=1
+gdscript/warnings/assert_always_true=2
+gdscript/warnings/assert_always_false=2
+gdscript/warnings/redundant_await=2
+gdscript/warnings/void_assignment=2
+
+[display]
+
+window/size/viewport_width=800
+window/size/viewport_height=600
+window/size/window_width_override=1600
+window/size/window_height_override=1200
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/vsync/vsync_mode=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/quinevere.supako/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
+import/fbx/enabled=false
