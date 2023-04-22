@@ -267,17 +267,6 @@ func is_root_shape() -> bool:
 	return _parent_shape == null
 
 
-func get_drawing_root() -> SpkoShape:
-	var node := self
-	while !node.is_root_shape():
-		node = node.get_parent_shape()
-	return node
-
-
-func get_path_in_drawing() -> NodePath:
-	return get_drawing_root().get_path_to(self)
-
-
 func get_element_id() -> int:
 	if _elemid == -1:
 		_elemid = randi()
