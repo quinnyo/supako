@@ -110,6 +110,7 @@ class EffectContext extends SpkoEffect.CallbackContext:
 @export var merge_op: MergeOp = MergeOp.IGNORE:
 	set(value):
 		merge_op = value
+		update_configuration_warnings()
 		mark_dirty()
 
 
@@ -146,6 +147,7 @@ var _parent_shape: SpkoShape
 var _brush: SpkoBrush
 var _rebuild: bool
 var _is_update_effects_queued: bool = false
+var _merge_hole_error: bool = false
 var _debug_ci: RID
 
 
@@ -246,6 +248,13 @@ func _notification(what: int) -> void:
 		NOTIFICATION_LOCAL_TRANSFORM_CHANGED:
 			if !is_root_shape():
 				get_parent_shape().mark_dirty()
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings := PackedStringArray()
+	if merge_op in [ MergeOp.UNION, MergeOp.INTERSECT, MergeOp.SUBTRACT ]:
+		warnings.push_back("MergeOp.%s is not supported for all input shapes. Merging this shape may result in a hole, which is not supported." % [ MergeOp.keys()[merge_op] ])
+	return warnings
 
 
 func get_parent_shape() -> SpkoShape:
@@ -468,7 +477,7 @@ func _get_brush() -> SpkoBrush:
 		# boolean merge child shapes...
 		for node in get_children():
 			var child := node as SpkoShape
-			if !child || !child.visible || !child._get_brush():
+			if !child || !child.visible || !child._get_brush() || child.merge_op == MergeOp.IGNORE:
 				continue
 			if n == null:
 				n = child._get_brush()
@@ -476,7 +485,10 @@ func _get_brush() -> SpkoBrush:
 				var b := SpkoBrush.new() # transformed copy of child brush
 				b.copy_from(child._get_brush(), child.transform)
 				var c := SpkoBrush.new()
+				_merge_hole_error = false
 				_merge(child.merge_op, n, b, c)
+				if _merge_hole_error:
+					push_warning("%s: Merging %s resulted in a hole, which was discarded. Holes are not currently supported." % [ self, child ])
 				n = c
 
 		for i in range(get_effects_count()):
@@ -517,16 +529,25 @@ func _merge(op: MergeOp, a: SpkoBrush, b: SpkoBrush, out: SpkoBrush) -> void:
 			var aisl := a.get_island_gon(aidx)
 			for bidx in range(b.get_island_count()):
 				var bisl := b.get_island_gon(bidx)
+
+				var merged: Array[PackedVector2Array]
 				match op:
 					MergeOp.UNION:
-						for gon in Geometry2D.merge_polygons(aisl.points, bisl.points):
-							out.add_island_from_points(gon, aisl.element_id)
+						merged = Geometry2D.merge_polygons(aisl.points, bisl.points)
 					MergeOp.INTERSECT:
-						for gon in Geometry2D.intersect_polygons(aisl.points, bisl.points):
-							out.add_island_from_points(gon, aisl.element_id)
+						merged = Geometry2D.intersect_polygons(aisl.points, bisl.points)
 					MergeOp.SUBTRACT:
-						for gon in Geometry2D.clip_polygons(aisl.points, bisl.points):
-							out.add_island_from_points(gon, aisl.element_id)
+						merged = Geometry2D.clip_polygons(aisl.points, bisl.points)
+					_:
+						push_error("unexpected MergeOp (%s)" % [ op ])
+						return
+
+				for gon in merged:
+					var is_hole := Geometry2D.is_polygon_clockwise(gon)
+					if is_hole:
+						_merge_hole_error = true
+						continue
+					out.add_island_from_points(gon, aisl.element_id)
 
 
 func _get_effect_context(index: int) -> EffectContext:
