@@ -71,7 +71,7 @@ vertex_colors_enabled = true
 
 [sub_resource type="Curve2D" id="Curve2D_a2d1d"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 30, -224, 0, 0, 0, 0, 30, -72, 0, 0, 0, 0, 49.5, -29.5, 0, 0, 0, 0, 78, -32, 0, 0, 0, 0, 102, -56, 0, 0, 0, 0, 126, -120, 0, 0, 0, 0, 126, -232, 0, 0, 0, 0, 158, -240, 0, 0, 0, 0, 158, 0, 0, 0, 0, 0, 126, 0, 0, 0, 0, 0, 118, -40, 0, 0, 0, 0, 94, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, -2, -64, 0, 0, 0, 0, -2, -232)
+"points": PackedVector2Array(0, 0, 0, 0, 30, -224, 0, 0, 0, 0, 30, -72, 0, 0, 0, 0, 49, -34, 0, 0, 0, 0, 89, -38, 0, 0, 0, 0, 109, -70, 0, 0, 0, 0, 126, -120, 0, 0, 0, 0, 126, -232, 0, 0, 0, 0, 158, -240, 0, 0, 0, 0, 165, -2, 0, 0, 0, 0, 133, -2, 0, 0, 0, 0, 129, -50, 0, 0, 0, 0, 94, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, -2, -64, 0, 0, 0, 0, -2, -232)
 }
 point_count = 15
 
@@ -133,7 +133,7 @@ script = ExtResource("4_ylpjv")
 curve = SubResource("Curve2D_v26m1")
 _elemid = 3628127178
 effects_data = Array[Dictionary]([{
-"enabled": false,
+"enabled": true,
 "id": 3077133547,
 "module": SubResource("Resource_sgwk6")
 }, {
@@ -180,7 +180,7 @@ merge_op = 1
 _elemid = 1806010096
 effects_data = Array[Dictionary]([])
 
-[node name="SpkoPath" type="Node2D" parent="supako/p"]
+[node name="hole" type="Node2D" parent="supako/p"]
 script = ExtResource("4_ylpjv")
 curve = SubResource("Curve2D_pl44g")
 merge_op = 4
@@ -195,7 +195,7 @@ merge_op = 1
 _elemid = 3849319054
 effects_data = Array[Dictionary]([])
 
-[node name="SpkoPath" type="Node2D" parent="supako/a"]
+[node name="hole" type="Node2D" parent="supako/a"]
 script = ExtResource("4_ylpjv")
 curve = SubResource("Curve2D_fv5w5")
 merge_op = 4
@@ -222,7 +222,7 @@ merge_op = 1
 _elemid = 95787892
 effects_data = Array[Dictionary]([])
 
-[node name="SpkoPath" type="Node2D" parent="supako/o"]
+[node name="hole" type="Node2D" parent="supako/o"]
 script = ExtResource("4_ylpjv")
 curve = SubResource("Curve2D_ivmog")
 merge_op = 4
