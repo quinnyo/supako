@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://blwrsnlf4auej"]
+[gd_scene load_steps=27 format=3 uid="uid://blwrsnlf4auej"]
 
 [ext_resource type="Script" path="res://addons/quinevere.supako/spko/effect/fill_painter.gd" id="2_5xpb1"]
 [ext_resource type="Script" path="res://addons/quinevere.supako/spko/effect/stroke_painter.gd" id="3_eih35"]
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/surface_select.gd" id="3_etmxc"]
 [ext_resource type="Script" path="res://addons/quinevere.supako/spko/node/path.gd" id="4_ylpjv"]
 [ext_resource type="Script" path="res://addons/quinevere.supako/spko/effect/corners.gd" id="5_b7flh"]
 
@@ -19,22 +20,48 @@ fillet_threshold = 1.0472
 fillet_depth = 12.0
 minimum_segment_length = 4.0
 
+[sub_resource type="Resource" id="Resource_d55cq"]
+script = ExtResource("3_etmxc")
+angles = Array[PackedFloat64Array]([PackedFloat64Array(2.53897, 0.18256)])
+
+[sub_resource type="Resource" id="Resource_vlhtv"]
+script = ExtResource("3_eih35")
+base_width = 16.0
+balance = 1.0
+texture_mode = 0
+color = Color(0.454902, 0.968627, 0.823529, 1)
+vertex_colors_enabled = true
+surface_select = SubResource("Resource_d55cq")
+
+[sub_resource type="Resource" id="Resource_00gm2"]
+script = ExtResource("3_etmxc")
+angles = Array[PackedFloat64Array]([PackedFloat64Array(0, 2.80606)])
+
+[sub_resource type="Resource" id="Resource_742p3"]
+script = ExtResource("3_eih35")
+base_width = 32.0
+balance = 1.0
+texture_mode = 0
+color = Color(0.435294, 0.223529, 0.309804, 1)
+vertex_colors_enabled = true
+surface_select = SubResource("Resource_00gm2")
+
 [sub_resource type="Resource" id="Resource_5hnuv"]
 script = ExtResource("2_5xpb1")
-color = Color(1, 1, 1, 1)
+color = Color(0.94902, 0.94902, 0.94902, 1)
 uv_mode = 0
 texture_offset = Vector2(0, 0)
 texture_scale = Vector2(1, 1)
 texture_rotation = 0.0
 texture_filter = 0
-texture_repeat = 0
+texture_repeat = 2
 
 [sub_resource type="Resource" id="Resource_lltlm"]
 script = ExtResource("3_eih35")
-base_width = 8.0
+base_width = 4.0
 balance = 0.0
 texture_mode = 0
-color = Color(0.678431, 0.678431, 0.678431, 1)
+color = Color(0.368102, 0.368102, 0.368102, 1)
 vertex_colors_enabled = true
 
 [sub_resource type="Curve2D" id="Curve2D_tnqxs"]
@@ -136,6 +163,14 @@ effects_data = Array[Dictionary]([{
 "enabled": true,
 "id": 3077133547,
 "module": SubResource("Resource_sgwk6")
+}, {
+"enabled": true,
+"id": 4249708317,
+"module": SubResource("Resource_vlhtv")
+}, {
+"enabled": true,
+"id": 3066890662,
+"module": SubResource("Resource_742p3")
 }, {
 "enabled": true,
 "id": 3357868213,

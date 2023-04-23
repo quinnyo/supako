@@ -11,6 +11,35 @@ enum TextureMode {
 }
 
 
+## Mesh build utility / typed mesh arrays
+class Meshy:
+	var vertex2: PackedVector2Array
+	var color: PackedColorArray
+	var index: PackedInt32Array
+	var uv: PackedVector2Array
+	var uv2: PackedVector2Array
+
+	func get_vertex_count() -> int:
+		return vertex2.size()
+
+	func as_arrays() -> Array:
+		if get_vertex_count() == 0:
+			return []
+		var arrays := []
+		arrays.resize(Mesh.ARRAY_MAX)
+		if !vertex2.is_empty():
+			arrays[Mesh.ARRAY_VERTEX] = vertex2
+		if !color.is_empty():
+			arrays[Mesh.ARRAY_COLOR] = color
+		if !index.is_empty():
+			arrays[Mesh.ARRAY_INDEX] = index
+		if !uv.is_empty():
+			arrays[Mesh.ARRAY_TEX_UV] = uv
+		if !uv2.is_empty():
+			arrays[Mesh.ARRAY_TEX_UV2] = uv2
+		return arrays
+
+
 ## Width of the stroke in pixels.
 @export var base_width: float = 8.0:
 	set(value):
@@ -48,6 +77,15 @@ enum TextureMode {
 @export var vertex_colors_enabled: bool = true:
 	set(value):
 		vertex_colors_enabled = value
+		notify_module_changed(true)
+
+@export var surface_select: SpkoSurfaceSelect:
+	set(value):
+		if surface_select && surface_select.changed.is_connected(notify_module_changed):
+			surface_select.changed.disconnect(notify_module_changed)
+		surface_select = value
+		if surface_select:
+			surface_select.changed.connect(notify_module_changed.bind(true))
 		notify_module_changed(true)
 
 
@@ -106,9 +144,9 @@ func _clear(ctx: CallbackContext) -> void:
 	ctx.cache_clear()
 
 
-func _build_island_mesh_arrays(ia: SpkoBrush.IslandAccess) -> Array:
-	if ia.get_vertex_count() < 2:
-		return []
+func _build_polyline_mesh(polyline: PackedInt32Array, ia: SpkoBrush.IslandAccess, meshy: Meshy) -> void:
+	if polyline.size() < 2:
+		return
 
 	# scale UVs for tiling...
 	var uv_scale := Vector2.ONE
@@ -119,15 +157,10 @@ func _build_island_mesh_arrays(ia: SpkoBrush.IslandAccess) -> Array:
 	var distance_pos := 0.0
 #	var distance_neg := 0.0
 
-	var vertices := PackedVector2Array()
-	var indices := PackedInt32Array()
-	var uvs := PackedVector2Array()
-	var uvs2 := PackedVector2Array() # UV2 is tiled
-
 	var qypos := _balance(base_width, balance)
 	var qyneg := qypos - base_width
 
-	for i in range(ia.get_vertex_count()):
+	for i in polyline:
 		var qpos_x_range := ia.parallel_lerp_range(i, qypos)
 		var qpos0 := ia.segment_lerp(i, qpos_x_range[0], qypos)
 		var qpos1 := ia.segment_lerp(i, qpos_x_range[1], qypos)
@@ -135,13 +168,12 @@ func _build_island_mesh_arrays(ia: SpkoBrush.IslandAccess) -> Array:
 		var qneg0 := ia.segment_lerp(i, qneg_x_range[0], qyneg)
 		var qneg1 := ia.segment_lerp(i, qneg_x_range[1], qyneg)
 
-		var index0 := vertices.size()
-		# {0 1 2}, {3 2 1}
-		indices.append_array([index0, index0 + 1, index0 + 2, index0 + 3, index0 + 2, index0 + 1])
-		vertices.append_array([qpos0, qpos1, qneg0, qneg1])
-		var uvpos0 := Vector2(float(i), 0.0)
-		var uvneg0 := Vector2(float(i), 1.0)
-		uvs.append_array([uvpos0, uvpos0 + Vector2(1.0, 0.0), uvneg0, uvneg0 + Vector2(1.0, 0.0)])
+		var index0 := meshy.get_vertex_count()
+		meshy.index.append_array([index0, index0 + 1, index0 + 2, index0 + 3, index0 + 2, index0 + 1])
+		meshy.vertex2.append_array([qpos0, qpos1, qneg0, qneg1])
+#		var uvpos0 := Vector2(float(i), 0.0)
+#		var uvneg0 := Vector2(float(i), 1.0)
+#		uvs.append_array([uvpos0, uvpos0 + Vector2(1.0, 0.0), uvneg0, uvneg0 + Vector2(1.0, 0.0)])
 
 		var length_pos := qpos0.distance_to(qpos1)
 #		var length_neg := qneg0.distance_to(qneg1)
@@ -151,23 +183,41 @@ func _build_island_mesh_arrays(ia: SpkoBrush.IslandAccess) -> Array:
 		var uv2_pos1 := uv_scale * Vector2(distance_pos + length_pos, 0.0)
 		var uv2_neg0 := uv_scale * Vector2(distance_pos, 1.0)
 		var uv2_neg1 := uv_scale * Vector2(distance_pos + length_pos, 1.0)
-		uvs2.append_array([uv2_pos0, uv2_pos1, uv2_neg0, uv2_neg1])
+		meshy.uv.append_array([uv2_pos0, uv2_pos1, uv2_neg0, uv2_neg1])
 		distance_pos += length_pos
 #		distance_neg += length_neg
 
 
-	var rsv := RenderingServer
-	var arrays := []
-	arrays.resize(rsv.ARRAY_MAX)
-	arrays[rsv.ARRAY_VERTEX] = vertices
+func _build_island_mesh_arrays(ia: SpkoBrush.IslandAccess) -> Array:
+	if ia.get_vertex_count() < 2:
+		return []
+
+	var polylines: Array[PackedInt32Array] = []
+	var started := false
+	for i in ia.get_vertex_count():
+		var surface_normal := ia.get_segment_normal(i)
+		if surface_select == null || surface_select.select_normal(surface_normal):
+			if started:
+				polylines[-1].push_back(i)
+			else:
+				polylines.push_back(PackedInt32Array([i]))
+				started = true
+		else:
+			started = false
+
+	if polylines.is_empty():
+		return []
+
+	var meshy := Meshy.new()
+
+	for polyline in polylines:
+		_build_polyline_mesh(polyline, ia, meshy)
+
 	if vertex_colors_enabled:
-		var colors := PackedColorArray()
-		colors.resize(vertices.size())
-		colors.fill(color)
-		arrays[rsv.ARRAY_COLOR] = colors
-	arrays[rsv.ARRAY_TEX_UV] = uvs2
-	arrays[rsv.ARRAY_INDEX] = indices
-	return arrays
+		meshy.color.resize(meshy.get_vertex_count())
+		meshy.color.fill(color)
+
+	return meshy.as_arrays()
 
 
 func _balance(p_x: float, p_balance: float) -> float:
