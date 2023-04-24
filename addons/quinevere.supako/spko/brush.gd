@@ -5,15 +5,6 @@ class_name SpkoBrush extends Resource
 const IslandAccess := preload("island_access.gd")
 
 
-## Extracted Island geometry primitive/thing.
-class IslandGon:
-	var points := PackedVector2Array()
-	var element_id: int
-	func _init(p_points: PackedVector2Array, p_element_id: int) -> void:
-		points = p_points
-		element_id = p_element_id
-
-
 @export var points := PackedVector2Array()
 @export var vertex_map: Dictionary
 @export var islands: Array[SpkoIsland] = []
@@ -80,11 +71,6 @@ func get_island_count() -> int:
 	return islands.size()
 
 
-func get_island_gon(p_idx: int) -> IslandGon:
-	var island := islands[p_idx]
-	return IslandGon.new(get_island_points(p_idx), island.element_id)
-
-
 ## Build point position buffer for island and return it.
 func get_island_points(p_idx: int) -> PackedVector2Array:
 	var vertices := PackedVector2Array()
@@ -107,8 +93,5 @@ func _add_vertex(p_vertex: Vector2) -> int:
 
 
 func _add_island(island: SpkoIsland) -> void:
-	# HACK
-#	if !island.clockwise:
-#	 	island.points.reverse()
 	islands.push_back(island)
 

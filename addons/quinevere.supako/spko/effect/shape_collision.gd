@@ -22,8 +22,7 @@ func _effect_build(ctx: CallbackContext, brush: SpkoBrush) -> void:
 
 	var polygons: Array[PackedVector2Array] = []
 	for idx in brush.get_island_count():
-		var island := brush.get_island_gon(idx)
-		polygons.append_array(Geometry2D.decompose_polygon_in_convex(island.points))
+		polygons.append_array(Geometry2D.decompose_polygon_in_convex(brush.get_island_points(idx)))
 
 	ctx.cache_set("polygons", polygons)
 	if ctx.is_visible():

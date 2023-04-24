@@ -515,18 +515,18 @@ func _merge(op: MergeOp, a: SpkoBrush, b: SpkoBrush, out: SpkoBrush) -> void:
 		out.add_from(b, Transform2D.IDENTITY)
 	else:
 		for aidx in range(a.get_island_count()):
-			var aisl := a.get_island_gon(aidx)
+			var apoints := a.get_island_points(aidx)
 			for bidx in range(b.get_island_count()):
-				var bisl := b.get_island_gon(bidx)
+				var bpoints := b.get_island_points(bidx)
 
 				var merged: Array[PackedVector2Array]
 				match op:
 					MergeOp.UNION:
-						merged = Geometry2D.merge_polygons(aisl.points, bisl.points)
+						merged = Geometry2D.merge_polygons(apoints, bpoints)
 					MergeOp.INTERSECT:
-						merged = Geometry2D.intersect_polygons(aisl.points, bisl.points)
+						merged = Geometry2D.intersect_polygons(apoints, bpoints)
 					MergeOp.SUBTRACT:
-						merged = Geometry2D.clip_polygons(aisl.points, bisl.points)
+						merged = Geometry2D.clip_polygons(apoints, bpoints)
 					_:
 						push_error("unexpected MergeOp (%s)" % [ op ])
 						return
@@ -536,7 +536,7 @@ func _merge(op: MergeOp, a: SpkoBrush, b: SpkoBrush, out: SpkoBrush) -> void:
 					if is_hole:
 						_merge_hole_error = true
 						continue
-					out.add_island_from_points(gon, aisl.element_id)
+					out.add_island_from_points(gon, 0)
 
 
 func _get_effect_context(index: int) -> EffectContext:
