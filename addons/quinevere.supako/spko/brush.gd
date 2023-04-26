@@ -82,6 +82,18 @@ func get_island_points(p_idx: int) -> PackedVector2Array:
 	return vertices
 
 
+func get_vertex_count() -> int:
+	return points.size()
+
+
+func get_vertex_position(p_idx: int) -> Vector2:
+	return points[p_idx]
+
+
+func set_vertex_position(p_idx: int, p_pos: Vector2) -> void:
+	points[p_idx] = p_pos
+
+
 ## Add (or find) a vertex/point (to the `points` array) and return the index to access it.
 func _add_vertex(p_vertex: Vector2) -> int:
 	var v := p_vertex.snapped(vertex_merge_distance)

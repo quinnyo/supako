@@ -15,12 +15,12 @@ func get_vertex_count() -> int:
 
 
 func get_vertex_position(p_idx: int) -> Vector2:
-	var k := wrapi(p_idx, 0, get_vertex_count())
-	return brush.points[island.points[k]]
+	var k := island.points[wrapi(p_idx, 0, get_vertex_count())]
+	return brush.get_vertex_position(k)
 
 
 func set_vertex_position(p_idx: int, p_pos: Vector2) -> void:
-	brush.points[island.points[p_idx]] = p_pos
+	brush.set_vertex_position(island.points[p_idx], p_pos)
 
 
 func insert_vertex(p_idx: int, p_pos: Vector2) -> void:
