@@ -536,7 +536,7 @@ func _merge(op: MergeOp, a: SpkoBrush, b: SpkoBrush, out: SpkoBrush) -> void:
 					if is_hole:
 						_merge_hole_error = true
 						continue
-					out.add_island_from_points(gon, 0)
+					out.add_island_from_points(gon)
 
 
 func _get_effect_context(index: int) -> EffectContext:

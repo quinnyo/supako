@@ -34,19 +34,17 @@ func add_from(brush: SpkoBrush, xf: Transform2D) -> void:
 			indices[i] = idxmap[indices[i]]
 		var island := SpkoIsland.new()
 		island.points = indices
-		island.element_id = src_island.element_id
 		island.clockwise = src_island.clockwise
 		_add_island(island)
 
 
-func add_island_from_points(p_points: PackedVector2Array, p_element_id: int) -> void:
+func add_island_from_points(p_points: PackedVector2Array) -> void:
 	var indices := PackedInt32Array()
 	indices.resize(p_points.size())
 	for i in range(p_points.size()):
 		indices[i] = _add_vertex(p_points[i])
 	var island := SpkoIsland.new()
 	island.points = indices
-	island.element_id = p_element_id
 	island.clockwise = Geometry2D.is_polygon_clockwise(p_points)
 	_add_island(island)
 
