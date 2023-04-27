@@ -51,18 +51,11 @@ func add_island_from_points(p_points: PackedVector2Array) -> void:
 
 ## Call f(IslandAccess) for each island in the brush.
 func iter_islands(f: Callable) -> void:
-	var removed_points := PackedInt32Array()
-	for island in islands:
-		var access := IslandAccess.new(self, island)
+	for island_id in islands.size():
+		var access := IslandAccess.new(self, island_id)
 		f.call(access)
-		removed_points.append_array(access._removed_points)
 		access.free()
-
-	# process removed points...
-#	for island in islands:
-#		for i in range(removed_points.size()):
-#			if island.points.has(removed_points[i]):
-#				removed_points[i] = -1
+	# TODO: remove unreferenced vertices?
 
 
 func get_island_count() -> int:
@@ -90,6 +83,48 @@ func get_vertex_position(p_idx: int) -> Vector2:
 
 func set_vertex_position(p_idx: int, p_pos: Vector2) -> void:
 	points[p_idx] = p_pos
+
+
+func island_get_vertex_count(p_island: int) -> int:
+	assert(_has_island(p_island))
+	return _get_island(p_island).points.size()
+
+
+func island_get_vertex_position(p_island: int, p_idx: int) -> Vector2:
+	assert(_has_island(p_island))
+	var island := _get_island(p_island)
+	var k := island.points[wrapi(p_idx, 0, island.points.size())]
+	return get_vertex_position(k)
+
+
+func island_set_vertex_position(p_island: int, p_idx: int, p_pos: Vector2) -> void:
+	assert(_has_island(p_island))
+	var k := _get_island(p_island).points[p_idx]
+	set_vertex_position(k, p_pos)
+
+
+func island_insert_vertex(p_island: int, p_idx: int, p_pos: Vector2) -> void:
+	assert(_has_island(p_island))
+	_get_island(p_island).points.insert(p_idx, _add_vertex(p_pos))
+
+
+func island_remove_vertex(p_island: int, p_idx: int) -> void:
+	assert(_has_island(p_island))
+	_get_island(p_island).points.remove_at(p_idx)
+
+
+func island_is_clockwise(p_island: int) -> bool:
+	assert(_has_island(p_island))
+	return _get_island(p_island).clockwise
+
+
+func _has_island(p_island: int) -> bool:
+	return p_island >= 0 && p_island < islands.size() && is_instance_valid(islands[p_island])
+
+
+func _get_island(p_island: int) -> SpkoIsland:
+	assert(p_island >= 0 && p_island < islands.size() && is_instance_valid(islands[p_island]))
+	return islands[p_island]
 
 
 ## Add (or find) a vertex/point (to the `points` array) and return the index to access it.

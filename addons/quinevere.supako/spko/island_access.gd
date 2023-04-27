@@ -1,35 +1,36 @@
 extends Object
 
 var brush: SpkoBrush
-var island: SpkoIsland
-var _removed_points := PackedInt32Array()
+var island_id: int
 
 
-func _init(p_brush: SpkoBrush, p_island: SpkoIsland) -> void:
+func _init(p_brush: SpkoBrush, p_island: int) -> void:
 	brush = p_brush
-	island = p_island
+	island_id = p_island
 
 
 func get_vertex_count() -> int:
-	return island.points.size()
+	return brush.island_get_vertex_count(island_id)
 
 
 func get_vertex_position(p_idx: int) -> Vector2:
-	var k := island.points[wrapi(p_idx, 0, get_vertex_count())]
-	return brush.get_vertex_position(k)
+	return brush.island_get_vertex_position(island_id, p_idx)
 
 
 func set_vertex_position(p_idx: int, p_pos: Vector2) -> void:
-	brush.set_vertex_position(island.points[p_idx], p_pos)
+	brush.island_set_vertex_position(island_id, p_idx, p_pos)
 
 
 func insert_vertex(p_idx: int, p_pos: Vector2) -> void:
-	island.points.insert(p_idx, brush._add_vertex(p_pos))
+	brush.island_insert_vertex(island_id, p_idx, p_pos)
 
 
 func remove_vertex(p_idx: int) -> void:
-	_removed_points.push_back(island.points[p_idx])
-	island.points.remove_at(p_idx)
+	brush.island_remove_vertex(island_id, p_idx)
+
+
+func get_winding_signum() -> int:
+	return 1 if brush.island_is_clockwise(island_id) else -1
 
 
 func get_corner_axis(p_idx: int) -> Vector2:
@@ -44,14 +45,6 @@ func get_corner_axis(p_idx: int) -> Vector2:
 	var uab := ab / mab
 	var ubc := bc / mbc
 	return uab.slerp(ubc, 0.5).orthogonal() * get_winding_signum() * -1.0
-
-
-func get_winding_signum() -> int:
-	return 1 if island.clockwise else -1
-
-
-func get_element_id() -> int:
-	return island.element_id
 
 
 ## Corner turn angle -- angle difference between segment in and segment out.
