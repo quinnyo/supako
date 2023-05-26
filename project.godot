@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Supako"
-config/features=PackedStringArray("4.0", "Mobile")
+config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
 
 [audio]
@@ -21,11 +21,11 @@ driver/driver="Dummy"
 [debug]
 
 gdscript/warnings/exclude_addons=false
-gdscript/warnings/integer_division=0
 gdscript/warnings/unsafe_method_access=1
+gdscript/warnings/redundant_await=2
 gdscript/warnings/assert_always_true=2
 gdscript/warnings/assert_always_false=2
-gdscript/warnings/redundant_await=2
+gdscript/warnings/integer_division=0
 gdscript/warnings/void_assignment=2
 
 [display]

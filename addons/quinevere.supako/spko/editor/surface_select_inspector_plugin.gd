@@ -24,7 +24,7 @@ func _parse_begin(object: Object) -> void:
 		add_property_editor_for_multiple_properties("Match Surface Normal (Angle Ranges)", properties, surface_select_editor)
 
 
-func _parse_property(object: Object, _type: Variant.Type, name: String, _hint_type: PropertyHint, _hint_string: String, _usage_flags: PropertyUsageFlags, _wide: bool) -> bool:
+func _parse_property(object: Object, _type: Variant.Type, name: String, _hint_type: PropertyHint, _hint_string: String, _usage_flags: int, _wide: bool) -> bool:
 	if object is SpkoSurfaceSelect && name == "angles" && surface_select_editor:
 		return true # hide default editor
 	return false

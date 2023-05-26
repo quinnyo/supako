@@ -39,7 +39,7 @@ func _can_handle(object: Object) -> bool:
 	return false
 
 
-func _parse_property(object: Object, _type: Variant.Type, name: String, _hint_type: PropertyHint, _hint_string: String, _usage_flags: PropertyUsageFlags, _wide: bool) -> bool:
+func _parse_property(object: Object, _type: Variant.Type, name: String, _hint_type: PropertyHint, _hint_string: String, _usage_flags: int, _wide: bool) -> bool:
 	var shape := object as SpkoShape
 	if shape:
 		var efct_match := shape.parse_efct_property(name)
