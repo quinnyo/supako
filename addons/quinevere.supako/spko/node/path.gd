@@ -90,5 +90,6 @@ func get_vertex_position_array() -> PackedVector2Array:
 func _build_brush() -> SpkoBrush:
 	var b := SpkoBrush.new()
 	if get_vertex_count() > 2:
-		b.add_island_from_points(get_vertex_position_array())
+		var island := b.add_island_from_points(get_vertex_position_array(), get_element_id())
+		b.island_add_tag(island, name)
 	return b

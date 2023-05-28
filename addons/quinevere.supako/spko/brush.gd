@@ -35,18 +35,23 @@ func add_from(brush: SpkoBrush, xf: Transform2D) -> void:
 		var island := SpkoIsland.new()
 		island.points = indices
 		island.clockwise = src_island.clockwise
+		island.tags = src_island.tags.duplicate()
+		island.owner_id = src_island.owner_id
 		_add_island(island)
 
 
-func add_island_from_points(p_points: PackedVector2Array) -> void:
+## Create a new island using the path p_points.
+## Returns the index of the newly created island.
+func add_island_from_points(p_points: PackedVector2Array, p_owner_id: int = 0) -> int:
 	var indices := PackedInt32Array()
 	indices.resize(p_points.size())
 	for i in range(p_points.size()):
 		indices[i] = _add_vertex(p_points[i])
 	var island := SpkoIsland.new()
+	island.owner_id = p_owner_id
 	island.points = indices
 	island.clockwise = Geometry2D.is_polygon_clockwise(p_points)
-	_add_island(island)
+	return _add_island(island)
 
 
 ## Call f(IslandAccess) for each island in the brush.
@@ -118,6 +123,44 @@ func island_is_clockwise(p_island: int) -> bool:
 	return _get_island(p_island).clockwise
 
 
+func island_get_owner(p_island: int) -> int:
+	return _get_island(p_island).owner_id
+
+
+func island_add_tag(p_island: int, p_tag: String) -> void:
+	_get_island(p_island).tags[p_tag] = ""
+
+
+func island_has_tag(p_island: int, p_tag: String) -> bool:
+	return _get_island(p_island).tags.has(p_tag)
+
+
+func island_get_segs(p_island: int) -> PackedInt32Array:
+	return _get_island(p_island).points.duplicate()
+
+
+func island_has_seg(p_island: int, p_a: int, p_b: int) -> bool:
+	var island := _get_island(p_island)
+	var isl_a := island.points[island.points.size() - 1] # assumes closed shapes
+	for i in island.points.size():
+		var isl_b := island.points[i]
+		if isl_a == p_a && isl_b == p_b:
+			return true
+		isl_a = isl_b
+
+	return false
+
+
+## Look up user/s of the segment (a, b)
+## Returns an array containing indices of all islands that include this segment.
+func find_seg_users(a:int, b:int) -> PackedInt32Array:
+	var result := PackedInt32Array()
+	for i in get_island_count():
+		if island_has_seg(i, a, b):
+			result.push_back(i)
+	return result
+
+
 func _has_island(p_island: int) -> bool:
 	return p_island >= 0 && p_island < islands.size() && is_instance_valid(islands[p_island])
 
@@ -138,6 +181,7 @@ func _add_vertex(p_vertex: Vector2) -> int:
 	return idx
 
 
-func _add_island(island: SpkoIsland) -> void:
+func _add_island(island: SpkoIsland) -> int:
 	islands.push_back(island)
+	return get_island_count() - 1
 

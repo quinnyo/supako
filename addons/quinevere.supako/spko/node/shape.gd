@@ -605,28 +605,48 @@ func _build_indexed_property_name(base: StringName, index: int, field: StringNam
 	return "%s_%d_%s" % [ base, index, field ]
 
 
-func _get_debug_color() -> Color:
-	var hue := float(get_element_id() % 65535) / 65535.0
+func _get_debug_color(p_element_id: int = get_element_id()) -> Color:
+	var hue := float(p_element_id % 65535) / 65535.0
 	return Color.from_hsv(hue, 0.55, 0.8)
 
 
 func _debug_draw() -> void:
-	if !is_visible_in_tree():
-		return
 	var ci := get_debug_canvas_item()
 	RenderingServer.canvas_item_clear(ci)
+	if !is_visible_in_tree() || !is_root_shape():
+		return
 	var brush := _get_brush()
 	if brush:
-		brush.iter_islands(_debug_draw_island.bind(ci))
+		# deferred canvas command queue
+		var commands: Array[Callable] = []
+		var commands2: Array[Callable] = []
 
+		for island in brush.get_island_count():
+			var color := _get_debug_color(brush.island_get_owner(island))
+			var points := brush.get_island_points(island)
+			if points.size() >= 3:
+				RenderingServer.canvas_item_add_polygon(ci, points, [Color(color, 0.2)]) # fill
+			commands2.push_back(RenderingServer.canvas_item_add_polyline.bind(ci, points + PackedVector2Array([points[0]]), [color])) # outline (on top)
 
-func _debug_draw_island(ia: SpkoBrush.IslandAccess, ci: RID) -> void:
-	if ia.get_vertex_count() >= 2:
-		var base_color := _get_debug_color()
-		var j := ia.get_vertex_count() - 1
-		for i in range(ia.get_vertex_count()):
-			var p := ia.get_vertex_position(i)
-			var q := ia.get_vertex_position(j)
-			RenderingServer.canvas_item_add_line(ci, q, p, base_color)
+			# draw shared border markers
+			var segments := brush.island_get_segs(island)
+			if segments.size() >= 2:
+				var a := segments[segments.size() - 1]
+				for b in segments:
+					var p0 := brush.get_vertex_position(a)
+					var p1 := brush.get_vertex_position(b)
+					var dir := (p1 - p0).normalized()
+					var left := dir.orthogonal()
+					var opposers := brush.find_seg_users(b, a)
+					var depth := 1.0
+					for oppisl in opposers:
+						var opp_color := _get_debug_color(brush.island_get_owner(oppisl))
+						commands.push_back(RenderingServer.canvas_item_add_line.bind(ci, p0 + left * depth, p1 + left * depth, Color(opp_color, 0.5)))
+						depth += 1.0
 
-			j = i # j follows i
+					a = b
+
+			for command in commands:
+				command.call()
+			for command in commands2:
+				command.call()
