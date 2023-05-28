@@ -134,6 +134,7 @@ func _add_vertex(p_vertex: Vector2) -> int:
 	if idx == -1:
 		idx = points.size()
 		points.push_back(v)
+		vertex_map[v] = idx
 	return idx
 
 
