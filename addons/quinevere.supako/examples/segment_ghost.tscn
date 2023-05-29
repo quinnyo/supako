@@ -1,0 +1,246 @@
+[gd_scene load_steps=23 format=3 uid="uid://dsptouoaceys4"]
+
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/node/path.gd" id="1_eqali"]
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/effect/fill_painter.gd" id="2_kket8"]
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/effect/stroke_painter.gd" id="3_sjsgm"]
+[ext_resource type="Script" path="res://addons/quinevere.supako/spko/surface_select.gd" id="4_l6w4d"]
+
+[sub_resource type="Curve2D" id="Curve2D_3muhq"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 256, -116, 0, 0, 0, 0, 148, -120, 0, 0, 0, 0, -12, -68, 0, 0, 0, 0, -76, 28, 0, 0, 0, 0, -80, 192, 0, 0, 0, 0, -50, 340, 0, 0, 0, 0, 0, 428, 0, 0, 0, 0, 228, 448, 0, 0, 0, 0, 284, 332, 0, 0, 0, 0, 324, 200, 0, 0, 0, 0, 332, 36, 0, 0, 0, 0, 308, -84)
+}
+point_count = 12
+
+[sub_resource type="Resource" id="Resource_vt3x8"]
+script = ExtResource("2_kket8")
+color = Color(1, 1, 1, 0.270588)
+uv_mode = 0
+texture_offset = Vector2(0, 0)
+texture_scale = Vector2(1, 1)
+texture_rotation = 0.0
+texture_filter = 0
+texture_repeat = 0
+
+[sub_resource type="Curve2D" id="Curve2D_gyvo4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 272, 336, 0, 0, 0, 0, -24, 248, 0, 0, 0, 0, -76, 436, 0, 0, 0, 0, -136, 472, 0, 0, 0, 0, -184, 464, 0, 0, 0, 0, -140, 508, 0, 0, 0, 0, -88, 492, 0, 0, 0, 0, -24, 452, 0, 0, 0, 0, -28, 524, 0, 0, 0, 0, -64, 576, 0, 0, 0, 0, 0, 552, 0, 0, 0, 0, 44, 448, 0, 0, 0, 0, 88, 408, 0, 0, 0, 0, 104, 496, 0, 0, 0, 0, 52, 576, 0, 0, 0, 0, 128, 532, 0, 0, 0, 0, 200, 412, 0, 0, 0, 0, 208, 568, 0, 0, 0, 0, 248, 500, 0, 0, 0, 0, 268, 436, 0, 0, 0, 0, 284, 336)
+}
+point_count = 21
+
+[sub_resource type="Resource" id="Resource_pggeh"]
+script = ExtResource("4_l6w4d")
+angles = Array[PackedFloat64Array]([PackedFloat64Array(6.03635, 2.85926)])
+
+[sub_resource type="Resource" id="Resource_17v23"]
+script = ExtResource("3_sjsgm")
+base_width = 8.0
+balance = 0.0
+texture_mode = 0
+color = Color(1, 1, 1, 1)
+vertex_colors_enabled = true
+surface_select = SubResource("Resource_pggeh")
+
+[sub_resource type="Curve2D" id="Curve2D_h6caq"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -15, -73, 0, 0, 0, 0, -63, -25, 0, 0, 0, 0, -36, 56, 0, 0, 0, 0, 40, 52, 0, 0, 0, 0, 37, -57)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_ri2ck"]
+script = ExtResource("2_kket8")
+color = Color(0.105882, 0.105882, 0.105882, 0.592157)
+uv_mode = 0
+texture_offset = Vector2(0, 0)
+texture_scale = Vector2(1, 1)
+texture_rotation = 0.0
+texture_filter = 0
+texture_repeat = 0
+
+[sub_resource type="Resource" id="Resource_67vfk"]
+script = ExtResource("3_sjsgm")
+base_width = 4.0
+balance = 3.0
+texture_mode = 0
+color = Color(0.639216, 0.639216, 0.639216, 0.745098)
+vertex_colors_enabled = true
+
+[sub_resource type="Curve2D" id="Curve2D_wcyjg"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 48, -24, 0, 0, 0, 0, 8, -64, 0, 0, 0, 0, -68, -40, 0, 0, 0, 0, -52, 20, 0, 0, 0, 0, -24, 72, 0, 0, 0, 0, 64, 52)
+}
+point_count = 6
+
+[sub_resource type="Resource" id="Resource_hgnfk"]
+script = ExtResource("2_kket8")
+color = Color(0.207843, 0.207843, 0.207843, 0.678431)
+uv_mode = 0
+texture_offset = Vector2(0, 0)
+texture_scale = Vector2(1, 1)
+texture_rotation = 0.0
+texture_filter = 0
+texture_repeat = 0
+
+[sub_resource type="Resource" id="Resource_cljer"]
+script = ExtResource("3_sjsgm")
+base_width = 2.0
+balance = 4.0
+texture_mode = 0
+color = Color(0.152941, 0.152941, 0.152941, 0.866667)
+vertex_colors_enabled = true
+
+[sub_resource type="Curve2D" id="Curve2D_n2ytd"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -13, -7.5, 0, 0, 0, 0, 2.5, 34.5, 0, 0, 0, 0, 27, 5, 0, 0, 0, 0, 70, 37, 0, 0, 0, 0, 120.5, 18.5, 0, 0, 0, 0, 143, 31, 0, 0, 0, 0, 159, 11, 0, 0, 0, 0, 195, 43, 0, 0, 0, 0, 191, -21, 0, 0, 0, 0, 151, -13, 0, 0, 0, 0, 127, -45, 0, 0, 0, 0, 51, -25, 0, 0, 0, 0, 19, -41)
+}
+point_count = 13
+
+[sub_resource type="Resource" id="Resource_se2r2"]
+script = ExtResource("3_sjsgm")
+base_width = 3.0
+balance = 0.0
+texture_mode = 0
+color = Color(0.807843, 0.690196, 0.709804, 1)
+vertex_colors_enabled = true
+
+[sub_resource type="Resource" id="Resource_spvcs"]
+script = ExtResource("3_sjsgm")
+base_width = 2.0
+balance = -7.245
+texture_mode = 0
+color = Color(0.776471, 0.368627, 0.431373, 1)
+vertex_colors_enabled = true
+
+[sub_resource type="Resource" id="Resource_ix2wx"]
+script = ExtResource("3_sjsgm")
+base_width = 3.0
+balance = -2.0
+texture_mode = 0
+color = Color(0.6, 0.196078, 0.317647, 1)
+vertex_colors_enabled = true
+
+[sub_resource type="Animation" id="Animation_7c23n"]
+resource_name = "justspookinabout"
+length = 7.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body/mouf:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.4, 3.3, 4.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(29, 281), Vector2(-10, 232), Vector2(43, 283), Vector2(41, 250)]
+}
+
+[sub_resource type="Animation" id="Animation_5eqpy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body/mouf:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(29, 281)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uuoce"]
+_data = {
+"RESET": SubResource("Animation_5eqpy"),
+"justspookinabout": SubResource("Animation_7c23n")
+}
+
+[node name="SegmentGhost" type="Node2D"]
+
+[node name="body" type="Node2D" parent="."]
+script = ExtResource("1_eqali")
+curve = SubResource("Curve2D_3muhq")
+_elemid = 2303735533
+effects_data = Array[Dictionary]([{
+"enabled": true,
+"id": 3061583091,
+"module": SubResource("Resource_vt3x8")
+}])
+
+[node name="danglies" type="Node2D" parent="body"]
+script = ExtResource("1_eqali")
+curve = SubResource("Curve2D_gyvo4")
+merge_op = 2
+_elemid = 482182766
+effects_data = Array[Dictionary]([{
+"enabled": true,
+"id": 4175097992,
+"module": SubResource("Resource_17v23")
+}])
+
+[node name="eye5" type="Node2D" parent="body"]
+position = Vector2(255, 113)
+script = ExtResource("1_eqali")
+curve = SubResource("Curve2D_h6caq")
+merge_op = 1
+_elemid = 302424826
+effects_data = Array[Dictionary]([{
+"enabled": true,
+"id": 2239032018,
+"module": SubResource("Resource_ri2ck")
+}, {
+"enabled": true,
+"id": 2993072759,
+"module": SubResource("Resource_67vfk")
+}])
+
+[node name="eye6" type="Node2D" parent="body"]
+position = Vector2(55, 93)
+script = ExtResource("1_eqali")
+curve = SubResource("Curve2D_wcyjg")
+merge_op = 1
+_elemid = 1808036963
+effects_data = Array[Dictionary]([{
+"enabled": true,
+"id": 2625636865,
+"module": SubResource("Resource_hgnfk")
+}, {
+"enabled": true,
+"id": 1973517726,
+"module": SubResource("Resource_cljer")
+}])
+
+[node name="mouf" type="Node2D" parent="body"]
+position = Vector2(29, 281)
+script = ExtResource("1_eqali")
+curve = SubResource("Curve2D_n2ytd")
+merge_op = 1
+_elemid = 1885442215
+effects_data = Array[Dictionary]([{
+"enabled": true,
+"id": 2229799014,
+"module": SubResource("Resource_se2r2")
+}, {
+"enabled": true,
+"id": 4187701816,
+"module": SubResource("Resource_spvcs")
+}, {
+"enabled": true,
+"id": 2606318452,
+"module": SubResource("Resource_ix2wx")
+}])
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Oh no! it's the S-S-S-
+SEGMENT GHOST!
+
+(it's the ghost of segments past)"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "justspookinabout"
+libraries = {
+"": SubResource("AnimationLibrary_uuoce")
+}
